@@ -1,0 +1,34 @@
+#!/usr/bin/bash
+
+[ "${EUID}" -eq 0 ] && echo "ERROR: Do not run as root." && exit 1
+
+source "$(dirname ${0})"/buildit.conf || exit 1
+
+# Wipe
+
+# Check if the working area doesn't even exist
+if [ -d "${BUILDIT_workarea_path}" ]; then
+
+    # Let GNU Autotools do the cleaning
+    if [ -f "${BUILDIT_workarea_path}"/buildit/Makefile ]; then
+        make -C "${BUILDIT_workarea_path}"/buildit uninstall
+        make -C "${BUILDIT_workarea_path}"/buildit distclean
+    fi
+    
+    # Delete any remaining empty directories
+    find "${BUILDIT_workarea_path}" -type d -empty -delete
+
+fi
+
+# Delete GNU Autotools poop
+rm -vrf "${BUILDIT_project_path}"/autom4te.cache
+rm -vf "${BUILDIT_project_path}"/Makefile.in
+rm -vf "${BUILDIT_project_path}"/aclocal.m4
+rm -vf "${BUILDIT_project_path}"/compile
+rm -vf "${BUILDIT_project_path}"/config.h
+rm -vf "${BUILDIT_project_path}"/config.h.in
+rm -vf "${BUILDIT_project_path}"/config.h.in~
+rm -vf "${BUILDIT_project_path}"/configure
+rm -vf "${BUILDIT_project_path}"/depcomp
+rm -vf "${BUILDIT_project_path}"/install-sh
+rm -vf "${BUILDIT_project_path}"/missing

@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+# The name of the project executable
+BUILDIT_project="exampleprojectname"
+
+# Path to the project (where the "configure.ac" file is located)
+BUILDIT_project_path="${HOME}"/Projects/"${BUILDIT_project}"
+
+# Path to where the project work area, where it will be built and installed
+# (This directory will be created if it doesn't exist)
+BUILDIT_workarea_path=/tmp/"${BUILDIT_project}"-"${USER}"
